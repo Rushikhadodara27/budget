@@ -3,149 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Budget Tracker</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Budget Tracker - Rushi Khadodara</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { background: #f8f9fa; }
-    .hero { padding: 80px 20px; background: linear-gradient(135deg,#007bff,#6610f2); color:white; text-align:center; }
-    .feature-card { transition: transform 0.3s; }
-    .feature-card:hover { transform: translateY(-8px); }
-    footer { margin-top: 40px; background:#212529; color:white; padding:20px; text-align:center; }
-    .highlight-name { font-weight: bold; color: #ffca2c; }
+    body {
+      background-color: #f8f9fa;
+    }
+    .hero {
+      background: linear-gradient(135deg, #007bff, #6610f2);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    footer {
+      margin-top: 50px;
+      padding: 15px;
+      background: #343a40;
+      color: white;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">💼 Budget Tracker</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="#reports">Reports</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
-      <!-- Your name highlight -->
-      <span class="navbar-text ms-3 highlight-name">Rushi Khadodara</span>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero Section -->
-<section class="hero" id="home">
-  <h1>Welcome to Budget Tracker</h1>
-  <p>Track your income, expenses and reports with ease.</p>
-</section>
-
-<!-- Dashboard Section -->
-<section id="dashboard" class="container my-5">
-  <h2 class="text-center mb-4">Dashboard</h2>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card p-3 shadow feature-card">
-        <h4>Add Transaction</h4>
-        <input type="text" id="desc" class="form-control mb-2" placeholder="Description">
-        <input type="number" id="amount" class="form-control mb-2" placeholder="Amount">
-        <select id="type" class="form-control mb-2">
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-        <button class="btn btn-primary w-100" onclick="addTransaction()">Add</button>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">Budget Tracker</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Reports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+        <span class="navbar-text text-warning fw-bold ms-3">
+          Rushi Khadodara
+        </span>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card p-3 shadow feature-card">
-        <h4>Summary</h4>
-        <p><strong>Total Income:</strong> ₹<span id="totalIncome">0</span></p>
-        <p><strong>Total Expense:</strong> ₹<span id="totalExpense">0</span></p>
-        <p><strong>Balance:</strong> ₹<span id="balance">0</span></p>
-        <ul id="transactionList" class="list-group"></ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="display-4 fw-bold">Welcome to Budget Tracker</h1>
+    <p class="lead">Track your income, expenses, and savings with ease.</p>
+    <a href="#" class="btn btn-light btn-lg mt-3">Get Started</a>
+  </section>
+
+  <!-- Features Section -->
+  <div class="container">
+    <div class="row text-center mb-4">
+      <h2 class="fw-bold">Features</h2>
+      <p class="text-muted">Manage your budget like a pro</p>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <h4 class="fw-bold">Income Tracking</h4>
+          <p>Easily record and manage all your income sources.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <h4 class="fw-bold">Expense Monitoring</h4>
+          <p>Stay on top of your daily, weekly, and monthly expenses.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <h4 class="fw-bold">Detailed Reports</h4>
+          <p>View charts and reports to analyze your spending habits.</p>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- Reports Section -->
-<section id="reports" class="container my-5">
-  <h2 class="text-center mb-4">Reports</h2>
-  <div class="row">
-    <div class="col-md-6">
-      <canvas id="pieChart"></canvas>
-    </div>
-    <div class="col-md-6">
-      <canvas id="barChart"></canvas>
-    </div>
+  <!-- About Section -->
+  <div class="container mt-5">
+    <h2 class="fw-bold text-center">About Us</h2>
+    <p class="text-center text-muted">This Budget Tracker project helps users manage their finances smartly. Designed with a professional corporate theme for better user experience.</p>
   </div>
-</section>
 
-<!-- About Section -->
-<section id="about" class="container my-5">
-  <h2 class="text-center mb-4">About</h2>
-  <p class="text-center">This project is created by <b>Rushi Khadodara</b> as a professional corporate-level budget tracking website using HTML, CSS, Bootstrap and JavaScript.</p>
-</section>
+  <!-- Contact Section -->
+  <div class="container mt-5 mb-5">
+    <h2 class="fw-bold text-center">Contact Us</h2>
+    <form class="w-75 mx-auto">
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" placeholder="Enter your name">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" placeholder="Enter your email">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Message</label>
+        <textarea class="form-control" rows="4" placeholder="Write your message"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+  </div>
 
-<!-- Contact Section -->
-<section id="contact" class="container my-5">
-  <h2 class="text-center mb-4">Contact Us</h2>
-  <form class="card p-4 shadow mx-auto" style="max-width:600px;">
-    <input type="text" class="form-control mb-2" placeholder="Your Name">
-    <input type="email" class="form-control mb-2" placeholder="Your Email">
-    <textarea class="form-control mb-2" placeholder="Message"></textarea>
-    <button type="submit" class="btn btn-success">Send</button>
-  </form>
-</section>
+  <!-- Footer -->
+  <footer>
+    © 2025 Rushi Khadodara | Enrollment: 240905040041
+  </footer>
 
-<!-- Footer -->
-<footer>
-  <p>© 2025 Budget Tracker | Designed by Rushi Khadodara</p>
-</footer>
-
-<!-- JS -->
-<script>
-let income=0, expense=0;
-let transactions=[];
-function addTransaction(){
-  let desc=document.getElementById("desc").value;
-  let amt=parseFloat(document.getElementById("amount").value);
-  let type=document.getElementById("type").value;
-  if(desc=="" || isNaN(amt)) return alert("Enter valid details!");
-  let transaction={desc,amt,type};
-  transactions.push(transaction);
-  if(type==="income"){income+=amt;}
-  else{expense+=amt;}
-  updateUI();
-}
-function updateUI(){
-  document.getElementById("totalIncome").innerText=income;
-  document.getElementById("totalExpense").innerText=expense;
-  document.getElementById("balance").innerText=income-expense;
-  let list=document.getElementById("transactionList");
-  list.innerHTML="";
-  transactions.forEach(t=>{
-    let li=document.createElement("li");
-    li.className="list-group-item";
-    li.innerText=${t.desc} - ₹${t.amt} (${t.type});
-    list.appendChild(li);
-  });
-  updateCharts();
-}
-function updateCharts(){
-  const pie=document.getElementById('pieChart').getContext('2d');
-  const bar=document.getElementById('barChart').getContext('2d');
-  if(window.pieChart) window.pieChart.destroy();
-  if(window.barChart) window.barChart.destroy();
-  window.pieChart=new Chart(pie,{type:'pie',data:{labels:['Income','Expense'],datasets:[{data:[income,expense],backgroundColor:['#28a745','#dc3545']}] }});
-  window.barChart=new Chart(bar,{type:'bar',data:{labels:['Income','Expense'],datasets:[{label:'Amount',data:[income,expense],backgroundColor:['#28a745','#dc3545']}] }});
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
