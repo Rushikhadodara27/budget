@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { background: #f8f9fa; }
+    .hero { padding: 80px 20px; background: linear-gradient(135deg,#007bff,#6610f2); color:white; text-align:center; }
+    .feature-card { transition: transform 0.3s; }
+    .feature-card:hover { transform: translateY(-8px); }
+    footer { margin-top: 40px; background:#212529; color:white; padding:20px; text-align:center; }
+    .highlight-name { font-weight: bold; color: #ffca2c; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">💼 Budget Tracker</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reports">Reports</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <!-- Your name highlight -->
+      <span class="navbar-text ms-3 highlight-name">Rushi Khadodara</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <h1>Welcome to Budget Tracker</h1>
+  <p>Track your income, expenses and reports with ease.</p>
+</section>
+
+<!-- Dashboard Section -->
+<section id="dashboard" class="container my-5">
+  <h2 class="text-center mb-4">Dashboard</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-3 shadow feature-card">
+        <h4>Add Transaction</h4>
+        <input type="text" id="desc" class="form-control mb-2" placeholder="Description">
+        <input type="number" id="amount" class="form-control mb-2" placeholder="Amount">
+        <select id="type" class="form-control mb-2">
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <button class="btn btn-primary w-100" onclick="addTransaction()">Add</button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3 shadow feature-card">
+        <h4>Summary</h4>
+        <p><strong>Total Income:</strong> ₹<span id="totalIncome">0</span></p>
+        <p><strong>Total Expense:</strong> ₹<span id="totalExpense">0</span></p>
+        <p><strong>Balance:</strong> ₹<span id="balance">0</span></p>
+        <ul id="transactionList" class="list-group"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reports Section -->
+<section id="reports" class="container my-5">
+  <h2 class="text-center mb-4">Reports</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <canvas id="pieChart"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="container my-5">
+  <h2 class="text-center mb-4">About</h2>
+  <p class="text-center">This project is created by <b>Rushi Khadodara</b> as a professional corporate-level budget tracking website using HTML, CSS, Bootstrap and JavaScript.</p>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="container my-5">
+  <h2 class="text-center mb-4">Contact Us</h2>
+  <form class="card p-4 shadow mx-auto" style="max-width:600px;">
+    <input type="text" class="form-control mb-2" placeholder="Your Name">
+    <input type="email" class="form-control mb-2" placeholder="Your Email">
+    <textarea class="form-control mb-2" placeholder="Message"></textarea>
+    <button type="submit" class="btn btn-success">Send</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 Budget Tracker | Designed by Rushi Khadodara</p>
+</footer>
+
+<!-- JS -->
+<script>
+let income=0, expense=0;
+let transactions=[];
+function addTransaction(){
+  let desc=document.getElementById("desc").value;
+  let amt=parseFloat(document.getElementById("amount").value);
+  let type=document.getElementById("type").value;
+  if(desc=="" || isNaN(amt)) return alert("Enter valid details!");
+  let transaction={desc,amt,type};
+  transactions.push(transaction);
+  if(type==="income"){income+=amt;}
+  else{expense+=amt;}
+  updateUI();
+}
+function updateUI(){
+  document.getElementById("totalIncome").innerText=income;
+  document.getElementById("totalExpense").innerText=expense;
+  document.getElementById("balance").innerText=income-expense;
+  let list=document.getElementById("transactionList");
+  list.innerHTML="";
+  transactions.forEach(t=>{
+    let li=document.createElement("li");
+    li.className="list-group-item";
+    li.innerText=${t.desc} - ₹${t.amt} (${t.type});
+    list.appendChild(li);
+  });
+  updateCharts();
+}
+function updateCharts(){
+  const pie=document.getElementById('pieChart').getContext('2d');
+  const bar=document.getElementById('barChart').getContext('2d');
+  if(window.pieChart) window.pieChart.destroy();
+  if(window.barChart) window.barChart.destroy();
+  window.pieChart=new Chart(pie,{type:'pie',data:{labels:['Income','Expense'],datasets:[{data:[income,expense],backgroundColor:['#28a745','#dc3545']}] }});
+  window.barChart=new Chart(bar,{type:'bar',data:{labels:['Income','Expense'],datasets:[{label:'Amount',data:[income,expense],backgroundColor:['#28a745','#dc3545']}] }});
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
